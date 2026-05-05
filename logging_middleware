@@ -1,1 +1,19 @@
+import {Request, Response, NextFuncion} from 'express';
+export const activityLogger = ( req : Request , res : Response, next : NextFunction) =>{const start = Date.now();
+   console.info('[START] ${req.method} ${req.url}-${new Date().toISOString()}');))
+   
+    res.on('finish' ,() =>{
+        const duration = Date.now() - start;
+        const status = res.statusCode;
+        if(status>= 500){
+            console.error('[ERROR] ${req.method} $req.url} failed with status ${status} in ${duration} ms');
+        }else if(status >= 400){
+            console.warn('[WARN] $ {req.method} ${ req.url} returned status ${status} -client issue.');
+        } else{
+            console.info('[SUCCESS] ${req.method} ${req.url} completed successfully in ${duration} ms');
+         }
+
+    });
+    next();
+};
 
