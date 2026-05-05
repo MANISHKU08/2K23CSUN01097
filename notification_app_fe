@@ -1,1 +1,13 @@
 
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
+export const PriorityToggle = ({ n, setN }: { n: number, setN: (val: number) => void }) => (
+  <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <InputLabel>Show Top N</InputLabel>
+    <Select value={n} label="Show Top N" onChange={(e) => setN(Number(e.target.value))}>
+      <MenuItem value={10}>Top 10</MenuItem>
+      <MenuItem value={15}>Top 15</MenuItem>
+      <MenuItem value={20}>Top 20</MenuItem>
+    </Select>
+  </FormControl>
+);
