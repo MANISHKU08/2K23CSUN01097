@@ -1,1 +1,19 @@
-
+type notificationType =' placement' | 'result' | 'event';
+interface Notification{
+    id: string;
+    type: notificationType;
+    timestamp: Date;
+    content: string;
+}
+const WEIGHTS : Record<notificationType, number> = {
+    'placement': 3,
+    'result': 2,
+    'event': 1
+};
+const calculateScore = (note : Notification) : number => {(
+    const recencyScore = note.timestamp.getTime();
+    return (WEIGHTS[note.type] * 1000000000000)+ recencyScore;
+};
+export const getTopNotifications = (notifications : Notification[], n : number) : Notification[] => {
+    return [...notifications].sort((a,b) => calculateScore(b) - calculateScore(a)).slice(0,n);
+};
